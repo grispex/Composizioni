@@ -12,13 +12,7 @@ const getModelUrl = (modelName) => {
     return null;
   }
   
-  // In sviluppo, usa il proxy Vite per bypassare CORS
-  if (import.meta.env.DEV) {
-    // Usa il proxy locale invece dell'URL diretto
-    return `/api/models/${modelName}`;
-  }
-  
-  // In produzione, usa l'URL diretto da R2
+  // Usa sempre l'URL diretto da R2 (sia in sviluppo che in produzione)
   // Rimuove eventuali slash finali dal base URL e aggiunge il nome del modello
   const baseUrl = MODELS_BASE_URL.endsWith('/') ? MODELS_BASE_URL.slice(0, -1) : MODELS_BASE_URL;
   return `${baseUrl}/${modelName}`;
