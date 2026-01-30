@@ -1,0 +1,240 @@
+body, .app-container {
+  background: #000;
+  min-height: 100vh;
+  margin: 0;
+  color: #fff;
+  font-family: Helvetica neue, 'Roboto Mono', 'Consolas', 'Menlo', monospace;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.object-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 auto;
+  padding: 16px 0.5vw 16px 0.5vw;
+  width: auto;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: visible;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2050;
+}
+
+.object-box {
+  border: 1px solid #fff;
+  background: #000;
+  color: #fff;
+  font-family: inherit;
+  cursor: help;
+  transition: background 0.15s, color 0.15s;
+  font-weight: normal;
+  outline: none;
+  box-shadow: none;
+  user-select: none;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  min-height: 0 !important;
+  height: 2vh !important;
+  max-height: 2vh !important;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.object-box.opened,
+.object-box.selected,
+.object-box.other-open {
+  padding-left: 2vh;
+  padding-right: 1vh;
+  justify-content: flex-start;
+}
+.object-box:focus, .object-box:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+.object-box.opened {
+  background: #fff;
+  color: #000;
+  border: 2px solid #fff;
+  z-index: 1;
+}
+.object-label.opened {
+  display: none;
+}
+
+.object-box.selected {
+  background: #fff;
+  color: #000;
+  font-weight: normal;
+  border: 2px solid #fff;
+  z-index: 1;
+}
+.object-label.selected {
+  display: none;
+}
+
+.object-label {
+  font-size: 0.55rem;
+  font-weight: normal;
+  transition: color 0.15s;
+}
+.object-label.selected,
+.object-label.opened {
+  display: none;
+}
+.object-label:not(.opened):not(.selected):not(.other-open) {
+  font-size: 0.55rem;
+  font-weight: normal;
+  color: #fff;
+  padding-left: 0;
+  padding-bottom: 4px;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  display: block;
+}
+.object-label.other-open {
+  font-size: 0.55rem;
+  font-weight: normal;
+  color: #fff;
+  padding-left: 8px;
+  padding-bottom: 4px;
+  line-height: 1;
+  text-align: left;
+}
+
+/* Modal stile windows-like */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: none;
+  z-index: 2000;
+  pointer-events: none;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fixed-modal {
+  border: 1px solid #fff;
+  background: #000;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  position: relative;
+  pointer-events: auto;
+  width: 90vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 2100;
+  overflow: visible;
+  box-sizing: border-box;
+  resize: none;
+}
+.modal-header {
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+  cursor: default;
+  user-select: none;
+  text-align: center;
+  min-height: 0;
+  height: 0;
+  overflow: hidden;
+}
+.modal-title {
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.modal-body {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 0;
+}
+.viewer-container {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .fixed-modal {
+    width: 50vw !important;
+    height: 50vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    resize: none !important;
+  }
+  .modal-header {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  .modal-body {
+    box-sizing: border-box;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 100%;
+    overflow: auto;
+  }
+}
+
+/* Media query specifica per mobile - visualizzatore più grande */
+@media (max-width: 768px) {
+  .fixed-modal {
+    width: 90vw !important;
+    height: 85vh !important;
+  }
+}
+
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+  body, .app-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #000;
+  }
+  #root, .fixed-modal, .object-list, .object-box {
+    display: none !important;
+  }
+  body::before {
+    content: "NO";
+    color: #fff;
+    font-size: 65vw;
+    text-align: center;
+    padding: 32px;
+    width: 100vw;
+    box-sizing: border-box;
+  }
+}
