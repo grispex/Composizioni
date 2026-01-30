@@ -5,6 +5,17 @@ import { Box3, Vector3 } from "three";
 import { getViewerConfig } from "../config/viewerConfig";
 
 function Model({ url }) {
+  // Verifica che l'URL sia valido
+  if (!url) {
+    console.error("Model: URL non fornito o non valido");
+    return null;
+  }
+
+  // Log dell'URL per debug
+  useEffect(() => {
+    console.log("Caricamento modello da:", url);
+  }, [url]);
+
   const { scene } = useGLTF(url);
   const { camera } = useThree();
   const groupRef = useRef();
@@ -117,6 +128,20 @@ const ThreeDViewer = ({ glbPath, active = true }) => {
 
   // Usa "always" quando il damping è attivo per permettere movimenti fluidi
   const frameloop = controlsConfig?.enableDamping ? "always" : "demand";
+
+  // Mostra un messaggio se glbPath non è valido
+  if (!glbPath) {
+    return (
+      <div className="viewer-container" ref={containerRef} style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: "white", backgroundColor: "#000" }}>
+        <div style={{ textAlign: "center", padding: "20px" }}>
+          <p>Errore: URL del modello non valido</p>
+          <p style={{ fontSize: "12px", marginTop: "10px" }}>
+            Verifica che VITE_MODELS_BASE_URL sia definita nel file .env
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="viewer-container" ref={containerRef} style={{ width: "100%", height: "100%" }}>

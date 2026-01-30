@@ -122,10 +122,16 @@ export const viewerConfigs = {
 
 /**
  * Ottiene la configurazione per un modello specifico
- * @param {string} glbPath - Il percorso del file GLB
+ * @param {string} glbPath - Il percorso del file GLB (può essere un URL completo o un percorso relativo)
  * @returns {object} La configurazione del visualizzatore
  */
 export const getViewerConfig = (glbPath) => {
-  return viewerConfigs[glbPath] || defaultConfig;
+  if (!glbPath) return defaultConfig;
+  
+  // Estrae il nome del file dal percorso (gestisce sia URL completi che percorsi relativi)
+  const fileName = glbPath.split('/').pop();
+  const configKey = `models/${fileName}`;
+  
+  return viewerConfigs[configKey] || defaultConfig;
 };
 
